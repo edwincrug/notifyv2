@@ -212,8 +212,13 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     //////////////////////////////////////////////////////////////////
 
     $scope.VerDocumento = function(not) {
-        window.open(not.adjunto, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
-        // myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
+        var cadena = not.adjunto;
+        var ar = cadena.split("|");
+
+        ar.forEach(function(entry){
+            //not.ruta_archivos + entry
+            var myWindow = window.open(not.ruta_archivos + entry, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
+        });   
     };
 
     $scope.VerBusiness = function(not) {
