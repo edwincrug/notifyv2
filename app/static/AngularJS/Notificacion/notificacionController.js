@@ -41,32 +41,31 @@ registrationModule.controller("notificacionController", function ($scope, $filte
             $('.parpadear').toggle('highlight');
         }, 500);
 
-        setInterval(function(){ 
-            if (!$scope.connected) {
-                console.log('Intentando reconexión...');
-                SocketConnect();
-            }
-        }, 10000);
-
         // setInterval(function () {
         //     $rootScope.Reload();
         // }, global_settings.liveReload);
         $rootScope.currentEmployee = getParameterByName('id');
-        if($rootScope.currentEmployee != ''){
-            //Obtengo el nombre del empleado
-            filtroRepository.getEmpleado($rootScope.currentEmployee)
-                .success(getEmpleadoSuccessCallback)
-                .error(errorCallBack);
-
-            //Recargamos la lista de aprobaciones
-            $rootScope.Reload();
-
-            //Descargo el filtro padre
-            GetMarca();
+        if($rootScope.currentEmployee == ''){
+            var idEmpleado = prompt("Ingrese un número de empleado", 1);
+            $rootScope.currentEmployee = idEmpleado;
         }
-        else{
-            alertFactory.warning('Debe loguearse con un empleado válido.');
-        }
+        //Obtengo el nombre del empleado
+        filtroRepository.getEmpleado($rootScope.currentEmployee)
+            .success(getEmpleadoSuccessCallback)
+            .error(errorCallBack);
+
+        //Recargamos la lista de aprobaciones
+        $rootScope.Reload();
+
+        //Descargo el filtro padre
+        GetMarca();
+
+        setInterval(function(){ 
+            if (!$scope.connected && $rootScope.currentEmployee != '') {
+                console.log('Intentando reconexión...');
+                SocketConnect();
+            }
+        }, 10000);
 
     };
 
@@ -214,12 +213,12 @@ registrationModule.controller("notificacionController", function ($scope, $filte
 
     $scope.VerDocumento = function(not) {
         window.open(not.adjunto, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
-        myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
+        // myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
     };
 
     $scope.VerBusiness = function(not) {
         var myWindow = window.open(not.link, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
-        myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
+        // myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
     };
 
     //Rercargo el reloj
