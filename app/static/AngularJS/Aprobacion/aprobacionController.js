@@ -12,17 +12,20 @@
     /////////////////////////////////////////////////////////////////
     //Aprobar una notificación
     $scope.Aprobar = function (not) {
-        if(confirm('¿Desea aprobar el folio: ' + not.identificador + '?')){
-            if ($scope.observacion != null){
-                $('#btnApprove').button('loading');
-                aprobacionRepository.responder(not.idAprobacion, 1,$scope.observacion)
-                    .success(putASuccessCallback)
-                    .error(errorCallBack);
+        if(not.estatus != 6)
+        {
+            if(confirm('¿Desea aprobar el folio: ' + not.identificador + '?')){
+                if ($scope.observacion != null){
+                    $('#btnApprove').button('loading');
+                    aprobacionRepository.responder(not.idAprobacion, 1,$scope.observacion)
+                        .success(putASuccessCallback)
+                        .error(errorCallBack);
+                }
+                else {
+                    alertFactory.info('Debe incluir un comentario.');
+                }
             }
-            else {
-                alertFactory.info('Debe incluir un comentario.');
-            }
-        }
+        }  
         
     };
 
@@ -41,15 +44,18 @@
 
     //Rechazar una notificación 
     $scope.Rechazar = function (not) {
-        if(confirm('¿Desea rechazar el folio: ' + not.identificador + '?')){
-            if ($scope.observacion != null ) {
-                $('#btnReject').button('loading');
-                aprobacionRepository.responder(not.idAprobacion, 0, $scope.observacion)
-                    .success(putRSuccessCallback)
-                    .error(errorCallBack);
-            }
-            else {
-                alertFactory.info('Debe incluir un comentario.');
+        if(not.estatus != 6)
+        {
+            if(confirm('¿Desea rechazar el folio: ' + not.identificador + '?')){
+                if ($scope.observacion != null ) {
+                    $('#btnReject').button('loading');
+                    aprobacionRepository.responder(not.idAprobacion, 0, $scope.observacion)
+                        .success(putRSuccessCallback)
+                        .error(errorCallBack);
+                }
+                else {
+                    alertFactory.info('Debe incluir un comentario.');
+                }
             }
         }
     };
@@ -59,6 +65,39 @@
         alertFactory.warning('Rechazada Correctamente.')
         $('#btnReject').button('reset');
         $rootScope.actualizar = true;
+        $rootScope.Reload();
+    };
+
+    /* LQMA 13012015 se agrego la funcionalidad para el boton de revision */
+    $scope.Revisar = function (not) {
+        //alert(not.identificador);
+        if(not.estatus != 6)
+        {
+            if(confirm('¿Desea mandar a revisión el folio: ' + not.identificador + '?')){
+                if ($scope.observacion != null ) {
+                    $('#btnCheck').button('loading');
+
+                    aprobacionRepository.responder(not.idAprobacion, 2, $scope.observacion)
+                        .success(putRvSuccessCallback)
+                        .error(errorCallBack);
+                }
+                else {
+                    alertFactory.info('Debe incluir un comentario.');
+                }
+        }
+    }
+    };
+
+    /*LQMA 13012015 add funcionalidad succes */
+    //Success de revision
+    var putRvSuccessCallback = function (data, status, headers, config) {
+        alertFactory.info('Enviado a Revisión Correctamente.')
+        $('#btnReject').button('reset');
+        $rootScope.actualizar = true;
+        /*LQMA add 14012015  se agrega la observacion como mensaje al chat.*/
+        //$scope.comentario = $scope.observacion;
+        //$rootScope.EnviarComentario();
+
         $rootScope.Reload();
     };
 
