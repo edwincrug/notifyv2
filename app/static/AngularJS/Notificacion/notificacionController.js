@@ -38,7 +38,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
 
         //Inicializamos la función de parpadeo de chat
         setInterval(function () {
-            $('.parpadear').toggle('highlight');
+           // $('.parpadear').toggle('highlight');
         }, 500);
 
         // setInterval(function () {
