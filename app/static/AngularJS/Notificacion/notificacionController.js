@@ -216,14 +216,12 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         var ar = cadena.split("|");
 
         ar.forEach(function(entry){
-            //not.ruta_archivos + entry
             var myWindow = window.open(not.ruta_archivos + entry, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
         });   
     };
 
     $scope.VerBusiness = function(not) {
         var myWindow = window.open(not.link, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
-        // myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
     };
 
     //Rercargo el reloj
@@ -400,7 +398,5 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     $scope.SetDepartamento = function(dep) {
         $scope.currentDepartamento = dep;
     };
-
-
 
 });

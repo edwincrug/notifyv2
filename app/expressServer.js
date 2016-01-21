@@ -51,6 +51,10 @@ var ExpressServer = function(config){
         res.sendfile('app/static/index.htm');
     });
 
+    this.expressServer.post('/', function(req, res){
+        console.log(req.body);
+    });
+
 };
 
 ExpressServer.prototype.router = function(controller,funcionalidad,method,url){
