@@ -172,11 +172,11 @@
                         <img class="visto" src="image/chat/visto.png" ng-hide="conversacion.chat_visto == 0 || conversacion.idEmpleado != currentEmployee"></img>
                         <div class="sender" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"><span class="glyphicon glyphicon-user iconChat" aria-hidden="true"></span> {{ conversacion.idEmpleado === currentEmployee ? 'Yo' : conversacion.nombre }}</div>
                         <div class="date" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.fecha | date:"dd-MM-yy HH:mm" }} </div>
-                        <div class="text" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.texto }}</div>
+                        <div class="text" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.texto }}
+                        </div>
                     </div>
                     <div id="bottom"></div>
                 </div>
-
             </div>
             <div class="modal-footer" ng-hide="currentNotificacion.estatus >= 3 && currentNotificacion.estatus != 6">
                 <div class="row" >
@@ -184,7 +184,7 @@
                     <!--<input type="text" class="form-control" ng-model="comentario" placeholder="Escriba un comentario" /> 
                         LQMA comment 14012015
                     -->
-                    <textarea class="form-control" rows="3" ng-model="comentario" placeholder="Escriba un comentario"></textarea>
+                    <textarea class="form-control" rows="3" id="txtComentario" placeholder="Escriba un comentario"></textarea>
 
                     </div>
                     <button type="button" class="btn btn-primary" data-loading-text="Enviando..." id="btnEnviar" ng-click="EnviarComentario()">Enviar</button>

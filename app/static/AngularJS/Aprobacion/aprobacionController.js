@@ -73,10 +73,10 @@
         //alert(not.identificador);
         if(not.estatus != 6)
         {
-            if(confirm('¿Desea mandar a revisión el folio: ' + not.identificador + '?')){
+            if(confirm('¿Desea enviar a revisión el folio: ' + not.identificador + '?')){
                 if ($scope.observacion != null ) {
                     $('#btnCheck').button('loading');
-
+                    $rootScope.currentNotificacion = not;
                     aprobacionRepository.responder(not.idAprobacion, 2, $scope.observacion)
                         .success(putRvSuccessCallback)
                         .error(errorCallBack);
@@ -95,8 +95,8 @@
         $('#btnReject').button('reset');
         $rootScope.actualizar = true;
         /*LQMA add 14012015  se agrega la observacion como mensaje al chat.*/
-        //$scope.comentario = $scope.observacion;
-        //$rootScope.EnviarComentario();
+        $rootScope.comentario = $scope.observacion;
+        $rootScope.EnviarComentario();
 
         $rootScope.Reload();
     };
