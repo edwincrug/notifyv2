@@ -1,6 +1,7 @@
 ﻿registrationModule.controller("conversacionController", function ($scope, $rootScope, $location, $anchorScroll, localStorageService, alertFactory, conversacionRepository) {
 
 
+
     //Mensajes en caso de error
     var errorCallBack = function (data, status, headers, config) {
         $('#btnEnviar').button('reset');
@@ -26,16 +27,21 @@
                 .error(errorCallBack);
         }
         setTimeout(function() {
-            $location.hash('bottom');
-            $anchorScroll();
+            // $location.hash('bottom');
+            // $anchorScroll();
+             $('#chat').animate({
+                    scrollTop: $("#bottom").offset().top
+                }, 2000);
         },500);
     };
 
-    $scope.EnviarComentario = function () {
-        if ($scope.comentario.length > 0)
+    $rootScope.EnviarComentario = function () {
+
+        var coment = $('textarea#txtComentario').val() != '' ? $('textarea#txtComentario').val() : $rootScope.comentario;
+        if (coment.length > 0)
         {
             $('#btnEnviar').button('loading');
-            conversacionRepository.add($rootScope.currentNotificacion.id, $rootScope.currentEmployee, $scope.comentario)
+            conversacionRepository.add($rootScope.currentNotificacion.id, $rootScope.currentEmployee, coment)
                 .success(postSuccessCallback)
                 .error(errorCallBack);
         }
@@ -45,7 +51,7 @@
         alertFactory.success('Comentarios registrados.');
         $('#btnEnviar').button('reset');
         $('#modalChat').modal('hide');
-        $scope.comentario = '';
+        $('textarea#txtComentario').val('');
         $rootScope.actualizar = true;
         $rootScope.Reload();
     };

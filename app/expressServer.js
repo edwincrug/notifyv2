@@ -51,6 +51,11 @@ var ExpressServer = function(config){
         res.sendfile('app/static/index.htm');
     });
 
+    //Recibo las variables de login
+    this.expressServer.post('*', function(req, res){
+        res.sendfile('app/static/index.htm');
+    });
+
 };
 
 ExpressServer.prototype.router = function(controller,funcionalidad,method,url){
