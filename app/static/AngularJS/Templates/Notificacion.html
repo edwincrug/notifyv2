@@ -75,7 +75,7 @@
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-class="{'disabled' : notificacion.estatus == 6}" ng-click="Aprobar(notificacion)" tooltip="Aprobar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
                             <button type="button" class="btn btn-danger btn-sm btnReject" data-loading-text="Rechazando..." id="btnReject" ng-class="{'disabled' : notificacion.estatus == 6}" ng-click="Rechazar(notificacion)" tooltip="Rechazar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Rechazo</button>
-                            <button type="button" class="btn btn-default btn-sm btnCheck" data-loading-text="Revisando..." id="btnCheck" ng-click="Revisar(notificacion)" ng-class="{'disabled' : notificacion.estatus == 6}" ng-hide="notificacion.agrupacion != 0" tooltip="Revisar"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>Revisión</button>
+                            <button type="button" class="btn btn-default btn-sm btnCheck" data-loading-text="Revisando..." id="btnCheck" ng-click="Revisar(notificacion)" ng-class="{'disabled' : notificacion.estatus == 6}" ng-hide="notificacion.agrupacion > 1" tooltip="Revisar"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>Revisión</button>
                         </div>
                     </div>
                     <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 }" ng-controller="aprobacionController">
