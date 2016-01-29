@@ -172,7 +172,7 @@
                         <img class="visto" src="image/chat/visto.png" ng-hide="conversacion.chat_visto == 0 || conversacion.idEmpleado != currentEmployee"></img>
                         <div class="sender" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"><span class="glyphicon glyphicon-user iconChat" aria-hidden="true"></span> {{ conversacion.idEmpleado === currentEmployee ? 'Yo' : conversacion.nombre }}</div>
                         <div class="date" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.fecha | date:"dd-MM-yy HH:mm" }} </div>
-                        <div class="text" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.texto }}
+                        <div class="text wordwrap" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.texto }}
                         </div>
                     </div>
                     <div id="bottom"></div>
