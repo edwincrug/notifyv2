@@ -1,2 +1,4 @@
 
 *.codekit
+app/static/min/confront-min.js
+app/static/prepros.cfg

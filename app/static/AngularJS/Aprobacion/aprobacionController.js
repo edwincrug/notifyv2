@@ -15,15 +15,15 @@
         if(not.estatus != 6)
         {
             if(confirm('¿Desea aprobar el folio: ' + not.identificador + '?')){
-                if ($scope.observacion != null){
+                //if ($scope.observacion != null){
                     $('#btnApprove').button('loading');
                     aprobacionRepository.responder(not.idAprobacion, 1,$scope.observacion)
                         .success(putASuccessCallback)
                         .error(errorCallBack);
-                }
-                else {
-                    alertFactory.info('Debe incluir un comentario.');
-                }
+                //}
+                //else {
+                    //alertFactory.info('Debe incluir un comentario.');
+                //}
             }
         }  
         
