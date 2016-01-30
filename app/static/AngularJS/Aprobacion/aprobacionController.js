@@ -2,7 +2,7 @@
 
 
     //Mensajes en caso de error
-    var errorCallBack = function (data, status, headers, config) {
+    var errorCallBack = function (data, status, headers, config) {        
         $('#btnEnviar').button('reset');
         alertFactory.error('Ocurrio un problema');
     };
@@ -14,12 +14,22 @@
     $scope.Aprobar = function (not) {
         if(not.estatus != 6)
         {
+            //alert($scope.observacion);
             if(confirm('¿Desea aprobar el folio: ' + not.identificador + '?')){
                 //if ($scope.observacion != null){
+                if ($scope.observacion.length <=250){
                     $('#btnApprove').button('loading');
-                    aprobacionRepository.responder(not.idAprobacion, 1,$scope.observacion)
-                        .success(putASuccessCallback)
-                        .error(errorCallBack);
+                        aprobacionRepository.responder(not.idAprobacion, 1,$scope.observacion)//$scope.observacion)
+                            .success(putASuccessCallback)
+                            .error(errorCallBack);
+                    }
+                    else
+                    {
+                        $('#btnApprove').button('reset');
+                        $rootScope.actualizar = true;
+                        $rootScope.Reload();
+                      alertFactory.warning('Solo se permiten comentarios de maximo 250 caracteres.');  
+                    }
                 //}
                 //else {
                     //alertFactory.info('Debe incluir un comentario.');
@@ -46,12 +56,26 @@
     $scope.Rechazar = function (not) {
         if(not.estatus != 6)
         {
-            if(confirm('¿Desea rechazar el folio: ' + not.identificador + '?')){
+            if(confirm('¿Desea rechazar el folio: ' + not.identificador + '?')){                
                 if ($scope.observacion != null ) {
+
+                    if ($scope.observacion.length <=250){
+
                     $('#btnReject').button('loading');
                     aprobacionRepository.responder(not.idAprobacion, 0, $scope.observacion)
                         .success(putRSuccessCallback)
                         .error(errorCallBack);
+                    }
+                    else
+                    {
+                        $('#btnReject').button('reset');
+                        $rootScope.actualizar = true;
+                        $rootScope.Reload();
+                      alertFactory.warning('Solo se permiten comentarios de maximo 250 caracteres.');  
+                    }
+
+
+
                 }
                 else {
                     alertFactory.info('Debe incluir un comentario.');
@@ -75,11 +99,23 @@
         {
             if(confirm('¿Desea enviar a revisión el folio: ' + not.identificador + '?')){
                 if ($scope.observacion != null ) {
+
+                    if ($scope.observacion.length <=250){
+
                     $('#btnCheck').button('loading');
                     $rootScope.currentNotificacion = not;
                     aprobacionRepository.responder(not.idAprobacion, 2, $scope.observacion)
                         .success(putRvSuccessCallback)
                         .error(errorCallBack);
+                    }
+                    else
+                    {
+                        $('#btnCheck').button('reset');
+                        $rootScope.actualizar = true;
+                        $rootScope.Reload();
+                        alertFactory.warning('Solo se permiten comentarios de maximo 250 caracteres.');  
+                    }
+
                 }
                 else {
                     alertFactory.info('Debe incluir un comentario.');
