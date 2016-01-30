@@ -40,10 +40,22 @@
         var coment = $('textarea#txtComentario').val() != '' ? $('textarea#txtComentario').val() : $rootScope.comentario;
         if (coment.length > 0)
         {
-            $('#btnEnviar').button('loading');
-            conversacionRepository.add($rootScope.currentNotificacion.id, $rootScope.currentEmployee, coment)
-                .success(postSuccessCallback)
-                .error(errorCallBack);
+            if (coment.length <=250){
+                $('#btnEnviar').button('loading');
+                conversacionRepository.add($rootScope.currentNotificacion.id, $rootScope.currentEmployee, coment)
+                    .success(postSuccessCallback)
+                    .error(errorCallBack);
+            }   
+            else
+            {
+                $('#btnEnviar').button('reset');
+                $('#modalChat').modal('hide');
+                $('textarea#txtComentario').val('');
+                $rootScope.actualizar = true;
+                $rootScope.Reload();
+                alertFactory.warning('Solo se permiten comentarios de maximo 250 caracteres.');  
+            }
+
         }
     }
     
