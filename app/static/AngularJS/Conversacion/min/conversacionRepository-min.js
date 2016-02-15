@@ -6,7 +6,12 @@ registrationModule.factory('conversacionRepository', function ($http) {
             return $http.get(conversacionUrl + '1|' + id);
         },
         add: function (notificacion,empleado,comentario) {
-            return $http.post(conversacionUrl + '1|' + notificacion + '|' + empleado + '|' + comentario);
+            //return $http.post(conversacionUrl + '1|' + notificacion + '|' + empleado + '|' + comentario);
+            return $http({
+                url: conversacionUrl,
+                method: "POST",
+                params: { id: '1|' + notificacion + '|' + empleado + '|' + comentario }
+            });
         },
         delete: function (obj) {
             return $http.delete(conversacionUrl + obj.id);
