@@ -8,7 +8,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     $scope.tooltipAlphabeth = 'Ordenar Descencente';
     $scope.dateOrder = true;
     $scope.tooltipDate = 'Ordenar Ascendente';
-    $scope.currentOrder = 1;
+    $scope.currentOrder = 0;
     //Variable de control de filtros
     $scope.filtrado = false; 
     //Manejo de cascada en filtros

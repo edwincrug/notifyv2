@@ -29,11 +29,13 @@
             <div id="cuerpoTab">
                 <div class="divider"></div>
                 <accordion close-others="oneAtATime">
-                    <accordion-group is-open="notificacion.open" ng-repeat="notificacion in listaNotificacion | filter:keySearch " class="itemList" ng-class="{ 'panel-primary': ( notificacion.estado == 0 && notificacion.tipoNotificacion != 2), 'panel-warning':(notificacion.tipoNotificacion == 2), 'panel-info': (notificacion.estado == 1 && notificacion.tipoNotificacion != 2 && notificacion.estatus != 6), 'panel-default' : ( notificacion.estado == 1 && notificacion.tipoNotificacion != 2 && notificacion.estatus == 6) }" ng-click="Visto(notificacion)" id="{{ notificacion.idAprobacion }}">
+                    <accordion-group is-open="notificacion.open" ng-repeat="notificacion in listaNotificacion | filter:keySearch " class="itemList" ng-class="{ 'panel-primary nuevaNotify': ( notificacion.estado == 0 && notificacion.tipoNotificacion != 2), 'panel-warning':(notificacion.tipoNotificacion == 2), 'panel-info': (notificacion.estado == 1 && notificacion.tipoNotificacion != 2 && notificacion.estatus != 6 && notificacion.chatPendiente == 0), 'panel-default' : ( notificacion.estado == 1 && notificacion.tipoNotificacion != 2 && notificacion.estatus == 6) }" ng-click="Visto(notificacion)" id="{{ notificacion.idAprobacion }}">
                     <accordion-heading>
                     <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': notificacion.open, 'glyphicon-chevron-right': !notificacion.open}" ng-hide="notificacion.MinutosFaltan >= 0 && notificacion.MinutosFaltan < 6 && notificacion.escalado != -1"></i>
                     <div class="row">
-                        <div class="col-xs-1"> <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0), 'glyphicon-send': (notificacion.tipoNotificacion == 3 && notificacion.chatPendiente == 0),  'glyphicon-comment parpadear': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> </div>
+                        <div class="col-xs-1"> 
+                            <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0), 'glyphicon-send': (notificacion.tipoNotificacion == 3 && notificacion.chatPendiente == 0),  'glyphicon-comment': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> 
+                        </div>
                         <div class="col-xs-4">{{ notificacion.agencia }} </div>
                         <div class="col-xs-4">{{ notificacion.identificador }} </div>
                         <div class="col-xs-2">{{ notificacion.fecha  | date:"dd/MM HH:mm" }} </div>
