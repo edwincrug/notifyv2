@@ -129,7 +129,8 @@ registrationModule.controller("notificacionController", function ($scope, $filte
                 if($scope.currentOrder == 1)
                     ApplyDateOrder(); 
                 else
-                    ApplyAlphaOrder(); 
+                    if($scope.alphaOrder)
+                        ApplyAlphaOrder(); 
                 if (data.length > inicial){
                     alertFactory.info((data.length - inicial).toString() + ' nuevas notificaciones.');
                 }
