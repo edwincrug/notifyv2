@@ -1,7 +1,6 @@
 @charset "UTF-8";
 .oculto {
-  display: none;
-}
+  display: none; }
 
 /* Hojas de estilos para el avatar */
 #avatar {
@@ -9,8 +8,7 @@
   border-radius: 30px;
   display: inline-block;
   float: right;
-  margin-right: 5px;
-}
+  margin-right: 5px; }
 
 #nombre {
   font-size: 13px;
@@ -20,8 +18,7 @@
   width: 80%;
   padding-top: 6px;
   padding-right: 4px;
-  font-weight: 100;
-}
+  font-weight: 100; }
 
 #usuario {
   border: 1px dotted #384267;
@@ -31,8 +28,7 @@
   top: 0;
   margin-top: -35px;
   background-color: #5C7DBB;
-  border-radius: 0px 0px 0px 0px;
-}
+  border-radius: 0px 0px 0px 0px; }
 
 #reloj {
   position: absolute;
@@ -46,8 +42,7 @@
   padding-bottom: 6px;
   padding-right: 3px;
   border-radius: 0px 0px 0px 5px;
-  font-weight: 300;
-}
+  font-weight: 300; }
 
 /* ****************************** */
 /* Hojas de estilos para los botones de filtro */
@@ -55,21 +50,17 @@
   position: absolute;
   right: 0;
   top: 0;
-  margin-top: 65px;
-}
+  margin-top: 65px; }
 
 .btnFiltro {
-  display: block;
-}
+  display: block; }
 
 .iconFiltro {
-  font-size: 15px;
-}
+  font-size: 15px; }
 
 .iconChevron {
   font-size: 9px;
-  margin-left: 3px;
-}
+  margin-left: 3px; }
 
 /* ****************************** */
 /* Estilos para búsquedas */
@@ -78,34 +69,28 @@
   position: absolute;
   right: 0;
   margin-top: 99px;
-  top: 0;
-}
+  top: 0; }
 
 /* Hace espacio para el control de búsquedas */
 .divider {
-  margin-top: 34px;
-}
+  margin-top: 34px; }
 
 #slideIzq {
   display: none;
   position: absolute;
-  right: 0;
-}
+  right: 0; }
 
 #btnSlideIzq {
-  float: right;
-}
+  float: right; }
 
 .red {
-  background-color: red;
-}
+  background-color: red; }
 
 /* ****************************** */
 /* MUestra el circulo de highlight */
 .iconito {
   padding-top: 6px;
-  font-size: 18px;
-}
+  font-size: 18px; }
 
 .parpadear {
   background-color: #337AB7;
@@ -114,13 +99,11 @@
   height: 30px;
   padding-left: 6px;
   border-radius: 30px;
-  margin-left: -6px;
-}
+  margin-left: -6px; }
 
 /* Cuerpo de todos los  */
 .dropElement {
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .timeContent {
   width: 0;
@@ -132,8 +115,7 @@
   right: 0;
   top: 0;
   margin-top: -1px;
-  margin-right: -1px;
-}
+  margin-right: -1px; }
 
 .timeIndicator {
   position: absolute;
@@ -142,8 +124,7 @@
   margin-right: -59px;
   margin-top: 20px;
   color: white;
-  font-size: 12px;
-}
+  font-size: 12px; }
 
 .timeMinutes {
   position: absolute;
@@ -152,96 +133,74 @@
   margin-right: -54px;
   color: white;
   font-size: 24px;
-  margin-top: -1px;
-}
+  margin-top: -1px; }
 
 #headerTitle {
-  padding-top: 10px;
-}
+  padding-top: 10px; }
 
 #encabezado {
   margin-top: 35px;
-  margin-bottom: 15px;
-}
+  margin-bottom: 15px; }
 
 #cuerpoTab {
-  margin-top: 10px;
-}
+  margin-top: 10px; }
 
 #chico {
-  display: none;
-}
+  display: none; }
 
 .labelNotificacion {
-  font-weight: 600;
-}
+  font-weight: 600; }
 
 .tipoLeft {
-  margin-left: 10px;
-}
+  margin-left: 10px; }
 
 .priorRight {
-  margin-right: 10px;
-}
+  margin-right: 10px; }
 
 .btnVerBusiness {
   float: right;
-  margin-right: 10px;
-}
+  margin-right: 10px; }
 
 .btnAprove {
-  float: right;
-}
+  float: right; }
 
 .btnReject {
-  float: right;
-}
+  float: right; }
 
 .badgeNotificacion {
   margin-bottom: 10px;
   padding-bottom: 5px;
-  font-family: 'Source Sans Pro';
+  font-family: "Source Sans Pro";
   font-weight: 300;
   float: right;
-  background-color: darkgray;
-}
+  background-color: darkgray; }
 
 #btnEnviar {
-  margin-right: 10px;
-}
+  margin-right: 10px; }
 
 .iconBadge {
-  font-size: 19px;
-}
+  font-size: 19px; }
 
 .botonera {
-  margin-top: 10px;
-}
+  margin-top: 10px; }
 
 .itemList {
-  position: relative;
-}
+  position: relative; }
 
 /* Small devices (desktops, 300px and down) */
 @media (min-width: 0px) and (max-width: 354px) {
   #contenedor {
-    display: none;
-  }
-  #chico {
-    display: block;
-  }
-}
+    display: none; }
 
+  #chico {
+    display: block; } }
 @media (min-width: 355px) and (max-width: 700px) {
   .flecha {
     position: absolute;
     position: absolute;
     right: 0;
     margin-top: 10px;
-    margin-right: 3px;
-  }
-}
-
+    margin-right: 3px; } }
 /* Small devices (desktops, 300px and down) */
 @media (min-width: 701px) and (max-width: 2000px) {
   .flecha {
@@ -249,53 +208,32 @@
     position: absolute;
     right: 0;
     margin-top: 10px;
-    margin-right: 3px;
-  }
-}
-
+    margin-right: 3px; } }
 .nuevaNotify {
-  background: #353BB0;
-  border: 1px solid #353BB0;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px #353BB0;
-  -webkit-box-shadow: 0px 0px 10px #353BB0;
-  -webkit-border-radius: 0px 10px 0px 10px;
-  margin: 0px auto;
+  border: 1px solid #4b75c4;
   animation: parpNotify 3s;
   -webkit-animation: parpNotify 3s;
   -moz-animation: parpNotify 3s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
-  -moz-animation-iteration-count: infinite;
-}
+  -moz-animation-iteration-count: infinite; }
 
 @keyframes parpNotify {
   0% {
-    box-shadow: 0px 0px 10px #353BB0;
-  }
+    box-shadow: 0px 0px 9px #337ab7; }
   50% {
-    box-shadow: 0px 0px 30px #353BB0;
-  }
+    box-shadow: 0px 0px 28px #337ab7; }
   100% {
-    box-shadow: 0px 0px 10px #353BB0;
-  }
-}
-
+    box-shadow: 0px 0px 9px #337ab7; } }
 @-webkit-keyframes parpNotify {
   0% {
-    -webkit-box-shadow: 0px 0px 10px #353BB0;
-  }
+    -webkit-box-shadow: 0px 0px 9px #337ab7; }
   50% {
-    -webkit-box-shadow: 0px 0px 30px #353BB0;
-  }
+    -webkit-box-shadow: 0px 0px 28px #337ab7; }
   100% {
-    -webkit-box-shadow: 0px 0px 10px #353BB0;
-  }
-}
-
+    -webkit-box-shadow: 0px 0px 9px #337ab7; } }
 .blanco {
-  background-color: white;
-}
+  background-color: white; }
 
 .nuevoChat {
   background: #0080cc;
@@ -311,29 +249,19 @@
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
   -moz-animation-iteration-count: infinite;
-  background-color: #0080cc;
-}
+  background-color: #0080cc; }
 
 @keyframes parpChat {
   0% {
-    box-shadow: 0px 0px 10px #FFFFFF;
-  }
+    box-shadow: 0px 0px 10px #FFFFFF; }
   50% {
-    box-shadow: 0px 0px 50px #FFFFFF;
-  }
+    box-shadow: 0px 0px 50px #FFFFFF; }
   100% {
-    box-shadow: 0px 0px 10px #FFFFFF;
-  }
-}
-
+    box-shadow: 0px 0px 10px #FFFFFF; } }
 @-webkit-keyframes parpChat {
   0% {
-    -webkit-box-shadow: 0px 0px 10px #FFFFFF;
-  }
+    -webkit-box-shadow: 0px 0px 10px #FFFFFF; }
   50% {
-    -webkit-box-shadow: 0px 0px 50px #FFFFFF;
-  }
+    -webkit-box-shadow: 0px 0px 50px #FFFFFF; }
   100% {
-    -webkit-box-shadow: 0px 0px 10px #FFFFFF;
-  }
-}
+    -webkit-box-shadow: 0px 0px 10px #FFFFFF; } }
