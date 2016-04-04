@@ -98,6 +98,12 @@ registrationModule.controller("notificacionController", function ($scope, $filte
             getNSuccessCallback(data,null,null,null);
         });
 
+        $scope.socket.on('pkgAprobacion', function(data){
+            //Obtiene Notificaciones
+            console.log(data.length + ' Aprobacion(es) recibida(s) at: ' + new Date().toString())
+            getASuccessCallback(data,null,null,null);
+        });
+
         $scope.socket.on('disconnect', function (){
             console.log('Se ha desconectado.');
             $scope.connected = false;

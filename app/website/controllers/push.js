@@ -12,7 +12,7 @@ var Push = function(config){
 	}
 }
 
-Push.prototype.get_see_data = function(req,res,next){
+Push.prototype.get_not_data = function(req,res,next){
 	var object = {};
 	var params = {}; 
 	var self = this;
@@ -24,7 +24,23 @@ Push.prototype.get_see_data = function(req,res,next){
 		object.error = error;
 		object.result = result;
 		
-		self.view.see(res, object);
+		self.view.not(res, object);
+	});
+}
+
+Push.prototype.get_apr_data = function(req,res,next){
+	var object = {};
+	var params = {}; 
+	var self = this;
+
+	var parameters = JSON.parse(req.params.data);
+
+	this.model.getAprobacion(parameters,function(error,result){
+		
+		object.error = error;
+		object.result = result;
+		
+		self.view.apr(res, object);
 	});
 }
 

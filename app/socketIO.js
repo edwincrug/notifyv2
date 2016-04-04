@@ -40,7 +40,7 @@ var SocketIO = function(config){
 			  request(
 			    { 	
 			    	method: 'GET',
-			    	uri: 'http://localhost:' + config.parameters.port + '/api/push/see/' + app_clients[key].idusuario
+			    	uri: 'http://localhost:' + config.parameters.port + '/api/push/not/' + app_clients[key].idusuario
 			    }
 			  , function (error, response, body) {
 			      if(response.statusCode == 200){
@@ -48,6 +48,33 @@ var SocketIO = function(config){
 			      	if(JSONbody.length > 0){
 						//Envio los datos al usuario
 			      		io.to(app_clients[JSONbody[0].idEmpleado].socketid).emit('pkgNotificacion',  JSONbody);
+			      		console.log('Paquete enviado a empleado : ' + JSONbody[0].idEmpleado);
+			      	}
+			      } 
+			      else {
+			        console.log('error: '+ response.statusCode);
+			        console.log(body);
+			      }
+			    }
+			  );
+		}
+	}, 10000);   
+
+	//LQMA 04042016 - Se programa el envío automático de aprobaciones a los usuarios conectados
+	setInterval(function(){
+  		for(key in app_clients)
+		{
+			  request(
+			    { 	
+			    	method: 'GET',
+			    	uri: 'http://localhost:' + config.parameters.port + '/api/push/apr/' + app_clients[key].idusuario
+			    }
+			  , function (error, response, body) {
+			      if(response.statusCode == 200){
+			      	var JSONbody = JSON.parse(body);
+			      	if(JSONbody.length > 0){
+						//Envio los datos al usuario
+			      		io.to(app_clients[JSONbody[0].idEmpleado].socketid).emit('pkgAprobacion',  JSONbody);
 			      		console.log('Paquete enviado a empleado : ' + JSONbody[0].idEmpleado);
 			      	}
 			      } 

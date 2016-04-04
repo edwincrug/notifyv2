@@ -22,7 +22,7 @@ var Push = function(config){
 //Funciones
 Push.prototype.getNotificacion = function(params,callback){
     var self = this.connection;
-    this.connection.connect(function(err) {
+    this.connection.connect(function(err) {      
       // Stored Procedure 
       var request = new sql.Request(self);
       request.input('idEmpleado', sql.Int, params);
@@ -36,6 +36,25 @@ Push.prototype.getNotificacion = function(params,callback){
         }
       });
 
+    });
+};
+
+
+Push.prototype.getAprobacion = function(params,callback){
+    var self = this.connection;
+    this.connection.connect(function(err) {
+      // Stored Procedure 
+      var request = new sql.Request(self);
+      request.input('idEmpleado', sql.Int, params);
+      // request.output('output_parameter', sql.VarChar(50));
+      request.execute('SEL_APROBACION_SP', function(err, recordsets, returnValue) {
+        if(recordsets != null){
+          callback(err, recordsets[0]);
+        }
+        else{
+          console.log('Error al obtener paorbaciones del usuario: ' + params + ' mensaje: ' + err);
+        }
+      });
     });
 };
 

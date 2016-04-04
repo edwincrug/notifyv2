@@ -8,7 +8,7 @@ function logError(err, res) {
     res.end("");
 }  
 
-Push.prototype.see = function(res, object){
+Push.prototype.not = function(res, object){
 	/*res.render('article_see', object);*/
 	if (object.error) { logError(object.error, res); return; }
 	
@@ -20,6 +20,21 @@ Push.prototype.see = function(res, object){
 	else {
 	}
 }
+
+//LQMA 04042016 aprobaciones
+Push.prototype.apr = function(res, object){
+	/*res.render('article_see', object);*/
+	if (object.error) { logError(object.error, res); return; }
+	
+	if (object.result) {
+		res.writeHead(200, { 'Content-Type': 'application/json' });
+		res.write(JSON.stringify(object.result));
+		res.end("");
+	}
+	else {
+	}
+}
+
 Push.prototype.add = function(res, object){
 	/*res.render('article_add', object);*/
 }
