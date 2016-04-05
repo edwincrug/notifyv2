@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-xs-4">{{ notificacion.agencia }} </div>
                         <div class="col-xs-4">{{ notificacion.identificador }} </div>
-                        <div class="col-xs-2">{{ notificacion.fecha  | date:"dd/MM HH:mm" }} </div>
+                        <div class="col-xs-2">{{ notificacion.fecha.replace('Z','') | date:"dd/MM HH:mm" }} </div>
                         <div class="col-xs-1"></div>
                         <div class="timeContent" ng-hide="notificacion.escalado == -1 || notificacion.MinutosFaltan < 0 ||  notificacion.MinutosFaltan > 6 || notificacion.tipoNotificacion == 2"> 
                             <div class="timeMinutes">{{ notificacion.MinutosFaltan }}</div>
@@ -105,7 +105,7 @@
             <div class="col-xs-1"> <span class="glyphicon iconito" ng-class="{ 'glyphicon-ok': ( aprobacion.aprobacion == 3 && aprobacion.tipoNotificacion != 2 ), 'glyphicon-remove': ( aprobacion.aprobacion == 4 && aprobacion.tipoNotificacion != 2 ), 'glyphicon-bell': ( aprobacion.tipoNotificacion == 2 ) }" aria-hidden="true"></span> </div>
             <div class="col-xs-4">{{ aprobacion.agencia }} </div>
             <div class="col-xs-4">{{ aprobacion.identificador }} </div>
-            <div class="col-xs-2">{{ aprobacion.fecha  | date:"dd/MM HH:mm" }} </div>
+            <div class="col-xs-2">{{ aprobacion.fecha.replace('Z','')  | date:"dd/MM HH:mm" }} </div>
             <div class="col-xs-1"></div>
         </div>
     </accordion-heading>
