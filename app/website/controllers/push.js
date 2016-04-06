@@ -17,15 +17,18 @@ Push.prototype.get_not_data = function(req,res,next){
 	var params = {}; 
 	var self = this;
 
-	var parameters = JSON.parse(req.params.data);
+	//Vaido parámetros
+	if(req.params.data){
+		var parameters = JSON.parse(req.params.data);
 
-	this.model.getNotificacion(parameters,function(error,result){
-		
-		object.error = error;
-		object.result = result;
-		
-		self.view.not(res, object);
-	});
+		this.model.getNotificacion(parameters,function(error,result){
+			
+			object.error = error;
+			object.result = result;
+			
+			self.view.not(res, object);
+		});
+	}
 }
 
 Push.prototype.get_apr_data = function(req,res,next){

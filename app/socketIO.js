@@ -11,16 +11,15 @@ var SocketIO = function(config){
 		socket.join('some::room');
 
 		socket.on('login', function(data){
-			data.user.socketid = socket.id;
-			app_clients[data.user.idusuario] = data.user
-			io.to(data.user.socketid).emit('hello', { mensaje :'Conectado correctamente: ' + (new Date().toString()) + ' ID: ' + socket.id });
-			//socket.emit('hello', { mensaje :'Conectado correctamente: ' + (new Date().toString()) + ' ID: ' + socket.id });
-			console.log('------Usuarios conectados--------');
-			console.log(app_clients);
+			if(data.user != ''){
+				data.user.socketid = socket.id;
+				app_clients[data.user.idusuario] = data.user
+				io.to(data.user.socketid).emit('hello', { mensaje :'Conectado correctamente: ' + (new Date().toString()) + ' ID: ' + socket.id });
+				//socket.emit('hello', { mensaje :'Conectado correctamente: ' + (new Date().toString()) + ' ID: ' + socket.id });
+				console.log('------Usuarios conectados--------');
+				console.log(app_clients);
+			}
 
-			// app_clients.forEach(function(entry) {
-		 //    	io.to(entry.socketid).emit('pkgData', { pkg :'Hola ' + entry.nombre });
-			// });
 		});
 		// socket.on('app_user',function(user){
 		// 	app_clients[user.id] = user
