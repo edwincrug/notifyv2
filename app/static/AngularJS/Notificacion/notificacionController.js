@@ -44,11 +44,14 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         // setInterval(function () {
         //     $rootScope.Reload();
         // }, global_settings.liveReload);
-        $rootScope.currentEmployee = getParameterByName('id');
-        if($rootScope.currentEmployee == ''){
-            var idEmpleado = prompt("Ingrese un número de empleado", 1);
-            $rootScope.currentEmployee = idEmpleado;
-        }
+        // $rootScope.currentEmployee = getParameterByName('id');
+        // if($rootScope.currentEmployee == ''){
+        //     var idEmpleado = prompt("Ingrese un número de empleado", 1);
+        //     $rootScope.currentEmployee = idEmpleado;
+        // }
+
+        $rootScope.currentEmployee  = $('#lgnUser').val();
+
         //Obtengo el nombre del empleado
         filtroRepository.getEmpleado($rootScope.currentEmployee)
             .success(getEmpleadoSuccessCallback)
