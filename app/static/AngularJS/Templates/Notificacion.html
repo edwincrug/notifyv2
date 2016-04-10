@@ -72,7 +72,7 @@
                         <span class="glyphicon glyphicon-circle-arrow-up iconBadge" tooltip="{{ notificacion.nivel + 1 }}º nivel" ng-class="{ 'oculto': notificacion.nivel == 0 }"> <span class="badge badgeNotificacion">{{ notificacion.nivel + 1 }}</span></span> 
                     </div>
                     <hr ng-class="{ 'oculto': notificacion.tipoNotificacion == 3 }" />
-                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 }" ng-controller="aprobacionController">
+                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 || notificacion.agrupacion == 1 }" ng-hide="notificacion.agrupacion == 1" ng-controller="aprobacionController">
                         <div class="col-xs-6"><textarea ng-readonly="notificacion.estatus == 6" class="form-control" rows="3" ng-model="observacion" placeholder="{{notificacion.comentarioRevision}}">{{notificacion.comentarioRevision}}</textarea></div>
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-class="{'disabled' : notificacion.estatus == 6}" ng-click="Aprobar(notificacion)" tooltip="Aprobar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
