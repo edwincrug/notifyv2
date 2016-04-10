@@ -48,7 +48,7 @@ var ExpressServer = function(config){
 
     //Servimos el archivo angular
     this.expressServer.get('/', function(req, res){
-        res.sendfile('app/static/index.htm');
+        res.sendfile('app/static/index.html');
     });
 
     //Recibo las variables de login
