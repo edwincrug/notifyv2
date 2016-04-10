@@ -50,7 +50,24 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         //     $rootScope.currentEmployee = idEmpleado;
         // }
 
-        $rootScope.currentEmployee  = $('#lgnUser').val();
+        //Obtengo el usuario logueado
+        if(!($('#lgnUser').val().indexOf('[') > -1)){
+            localStorageService.set('lgnUser', $('#lgnUser').val());
+        }
+        else{
+            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
+                if(getParameterByName('employee') != ''){
+                    $rootScope.currentEmployee = getParameterByName('employee');
+                }
+                else{
+                   alert('Inicie sesión desde panel de aplicaciones.');
+                    window.close(); 
+                }
+                
+            }
+        }
+        if($rootScope.currentEmployee == null)
+            $rootScope.currentEmployee = localStorageService.get('lgnUser');
 
         //Obtengo el nombre del empleado
         filtroRepository.getEmpleado($rootScope.currentEmployee)
