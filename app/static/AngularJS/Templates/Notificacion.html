@@ -34,9 +34,8 @@
                     <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': notificacion.open, 'glyphicon-chevron-right': !notificacion.open}" ng-hide="notificacion.MinutosFaltan >= 0 && notificacion.MinutosFaltan < 6 && notificacion.escalado != -1"></i>
                     <div class="row">
                         <div class="col-xs-1"> 
-                            <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0), 'glyphicon-send': (notificacion.tipoNotificacion == 3 && notificacion.chatPendiente == 0),  'glyphicon-comment': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> 
+                            <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0 && notificacion.agrupacion != 3, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0), 'glyphicon-send': ((notificacion.tipoNotificacion == 3 && notificacion.chatPendiente == 0) || (notificacion.agrupacion == 3)),  'glyphicon-comment': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> 
                         </div>
-                        <div class="col-xs-4">{{ notificacion.agencia }} </div>
                         <div class="col-xs-4">{{ notificacion.identificador }} </div>
                         <div class="col-xs-2">{{ notificacion.fecha.replace('Z','') | date:"dd/MM HH:mm" }} </div>
                         <div class="col-xs-1"></div>
@@ -59,20 +58,20 @@
                     <div class="row">
                         <div class="labelNotificacion col-xs-3">Descripción:</div>
                         <div class=" col-xs-9">{{ notificacion.descripcionLarga  }}</div>
-                    </div>
-                    <div class="row" ng-show="notificacion.tipoNotificacion == 3 || notificacion.estatus == 6">
+                    </div>                    
+                    <div class="row" ng-show="notificacion.tipoNotificacion == 3 || notificacion.estatus == 6 || notificacion.agrupacion == 3">
                         <div class="labelNotificacion col-xs-3">Estatus: </div>
-                        <div class="labelNotificacion col-xs-9"> {{(notificacion.estatus == 6 ? 'En Revisión' : (notificacion.agrupacion == 3 ? 'Recepción Pendiente' : 'P1endiente de aprobación'))}} </div>
+                        <div class="labelNotificacion col-xs-9"> {{(notificacion.estatus == 6 ? 'En Revisión' : (notificacion.agrupacion == 3 ? 'Recepción Pendiente' : 'Pendiente de aprobación'))}} </div>
                     </div>
                     <div class="row botonera">
-                        <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el detalle en BP" ng-hide="notificacion.modalidadAdjunto == 2" ng-click="VerBusiness(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ (notificacion.agrupacion === 1 ?  'Aprobar lote':'BusinessPro') }}</button>
+                        <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el detalle en BP" ng-hide="notificacion.modalidadAdjunto == 2" ng-click="VerBusiness(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ (notificacion.agrupacion === 1 ?  'Aprobar lote': (notificacion.agrupacion === 3 ?'Recepción':'BusinessPro')) }}</button>
                         <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el documento" ng-hide="notificacion.modalidadAdjunto == 1" ng-click="VerDocumento(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>{{ (notificacion.agrupacion === 3 ?  'Recepción':'Ver Documento') }} </button>
                         <button type="button" class="btn btn-sm btnVerBusiness" ng-class="{ 'btn-default': notificacion.chat == 0, 'btn-success': notificacion.chat > 0 }" ng-click="ShowChat(notificacion)" ng-controller="conversacionController" tooltip="Ver conversción"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
                         <span class="glyphicon glyphicon-phone iconBadge" aria-hidden="true" ng-class="{ 'oculto': notificacion.correoEnviado == 0 || notificacion.tipoNotificacion != 1 }"><span class="badge badgeNotificacion">{{ notificacion.correoEnviado }}</span></span>
                         <span class="glyphicon glyphicon-circle-arrow-up iconBadge" tooltip="{{ notificacion.nivel + 1 }}º nivel" ng-class="{ 'oculto': notificacion.nivel == 0 }"> <span class="badge badgeNotificacion">{{ notificacion.nivel + 1 }}</span></span> 
                     </div>
                     <hr ng-class="{ 'oculto': notificacion.tipoNotificacion == 3 }" />
-                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 || notificacion.agrupacion == 1 }" ng-hide="notificacion.agrupacion == 1" ng-controller="aprobacionController">
+                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 || notificacion.agrupacion == 1 || notificacion.agrupacion == 3 }" ng-hide="notificacion.agrupacion == 1" ng-controller="aprobacionController">
                         <div class="col-xs-6"><textarea ng-readonly="notificacion.estatus == 6" class="form-control" rows="3" ng-model="observacion" placeholder="{{notificacion.comentarioRevision}}">{{notificacion.comentarioRevision}}</textarea></div>
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-class="{'disabled' : notificacion.estatus == 6}" ng-click="Aprobar(notificacion)" tooltip="Aprobar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
