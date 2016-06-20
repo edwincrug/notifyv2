@@ -62,11 +62,11 @@
                     </div>
                     <div class="row" ng-show="notificacion.tipoNotificacion == 3 || notificacion.estatus == 6">
                         <div class="labelNotificacion col-xs-3">Estatus: </div>
-                        <div class="labelNotificacion col-xs-9"> {{(notificacion.estatus == 6 ? 'En Revisión' : 'Pendiente de aprobación')}} </div>
+                        <div class="labelNotificacion col-xs-9"> {{(notificacion.estatus == 6 ? 'En Revisión' : (notificacion.agrupacion == 3 ? 'Recepción Pendiente' : 'P1endiente de aprobación'))}} </div>
                     </div>
                     <div class="row botonera">
-                        <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el detalle en BP" ng-hide="notificacion.modalidadAdjunto == 2" ng-click="VerBusiness(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ (notificacion.agrupacion === 1 ?  'Aprobar lote': 'BusinessPro') }}</button>
-                        <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el documento" ng-hide="notificacion.modalidadAdjunto == 1" ng-click="VerDocumento(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver Documento</button>
+                        <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el detalle en BP" ng-hide="notificacion.modalidadAdjunto == 2" ng-click="VerBusiness(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ (notificacion.agrupacion === 1 ?  'Aprobar lote':'BusinessPro') }}</button>
+                        <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el documento" ng-hide="notificacion.modalidadAdjunto == 1" ng-click="VerDocumento(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>{{ (notificacion.agrupacion === 3 ?  'Recepción':'Ver Documento') }} </button>
                         <button type="button" class="btn btn-sm btnVerBusiness" ng-class="{ 'btn-default': notificacion.chat == 0, 'btn-success': notificacion.chat > 0 }" ng-click="ShowChat(notificacion)" ng-controller="conversacionController" tooltip="Ver conversción"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
                         <span class="glyphicon glyphicon-phone iconBadge" aria-hidden="true" ng-class="{ 'oculto': notificacion.correoEnviado == 0 || notificacion.tipoNotificacion != 1 }"><span class="badge badgeNotificacion">{{ notificacion.correoEnviado }}</span></span>
                         <span class="glyphicon glyphicon-circle-arrow-up iconBadge" tooltip="{{ notificacion.nivel + 1 }}º nivel" ng-class="{ 'oculto': notificacion.nivel == 0 }"> <span class="badge badgeNotificacion">{{ notificacion.nivel + 1 }}</span></span> 
