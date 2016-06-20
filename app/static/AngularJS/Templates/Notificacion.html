@@ -36,6 +36,7 @@
                         <div class="col-xs-1"> 
                             <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0 && notificacion.agrupacion != 3, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0), 'glyphicon-send': ((notificacion.tipoNotificacion == 3 && notificacion.chatPendiente == 0) || (notificacion.agrupacion == 3)),  'glyphicon-comment': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> 
                         </div>
+                        <div class="col-xs-4">{{ notificacion.agencia }}</div>
                         <div class="col-xs-4">{{ notificacion.identificador }} </div>
                         <div class="col-xs-2">{{ notificacion.fecha.replace('Z','') | date:"dd/MM HH:mm" }} </div>
                         <div class="col-xs-1"></div>
