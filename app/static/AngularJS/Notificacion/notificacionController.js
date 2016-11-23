@@ -96,7 +96,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     //Conecta el socket
     var SocketConnect = function() {
         //Inicio sesión en el socket para recibir actualizaciones
-        $scope.socket = io.connect('http://192.168.20.41:3100/');
+        $scope.socket = io.connect('http://192.168.20.9:3100/');
         if($scope.socket != null){
            SocketJoin(); 
        }

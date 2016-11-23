@@ -1,5 +1,6 @@
 ﻿registrationModule.controller("aprobacionController", function ($scope, $rootScope, localStorageService, alertFactory, aprobacionRepository) {
 
+    $scope.observacion = '';
 
     //Mensajes en caso de error
     var errorCallBack = function (data, status, headers, config) {        
@@ -14,7 +15,7 @@
     $scope.Aprobar = function (not) {
         if(not.estatus != 6)
         {
-            //alert($scope.observacion);
+            //alert(not.idAprobacion);
             if(confirm('¿Desea aprobar el folio: ' + not.identificador + '?')){
                 //if ($scope.observacion != null){
                 if ($scope.observacion.length <=250){
