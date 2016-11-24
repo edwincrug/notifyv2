@@ -47,7 +47,7 @@
                     </div>
                 </accordion-heading>
                 <div class="contenedorNotificacion">
-                    <div class="row" ng-hide="notificacion.agrupacion == 4">
+                    <div class="row" ng-hide="notificacion.agrupacion == 4 || notificacion.agrupacion == 5 || notificacion.agrupacion == 6">
                         <div class="tipoLeft pull-left"><span class="labelNotificacion"> Nodo - </span> {{ notificacion.etapaProceso + ' | ' }}  <span class="labelNotificacion"> Tipo : </span> {{ (notificacion.agrupacion === 0 ?  'Unitario': 'Lote') }} </div>
                         <div class="priorRight pull-right"><span class="labelNotificacion"> Departamento: </span>{{ notificacion.departamento }}</div>
                     </div>
