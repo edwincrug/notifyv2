@@ -7,6 +7,9 @@ registrationModule.factory('notificacionRepository', function ($http) {
         },
         update: function (id) {
             return $http.post(notificacionUrl + '2|' + id);
+        },
+        getPdf: function (tipo,folio,nodo) {
+            return $http.get(notificacionUrl + '2|' + tipo +'|'+ folio+'|' + nodo);
         }
     };
 });

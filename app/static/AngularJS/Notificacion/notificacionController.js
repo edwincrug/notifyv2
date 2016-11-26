@@ -1,4 +1,4 @@
-registrationModule.controller("notificacionController", function ($scope, $filter, $rootScope, localStorageService, alertFactory, notificacionRepository, aprobacionRepository, filtroRepository) {
+registrationModule.controller("notificacionController", function($scope, $filter, $rootScope, localStorageService, alertFactory, notificacionRepository, aprobacionRepository, filtroRepository, Utils) {
 
     //Propiedades
     $scope.oneAtATime = true;
@@ -10,7 +10,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     $scope.tooltipDate = 'Ordenar Ascendente';
     $scope.currentOrder = 0;
     //Variable de control de filtros
-    $scope.filtrado = false; 
+    $scope.filtrado = false;
     //Manejo de cascada en filtros
     $scope.nivelCascada = 1;
 
@@ -20,7 +20,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
 
 
     //Grupo de funciones de inicio
-    $scope.init = function () {
+    $scope.init = function() {
         $rootScope.actualizar = true;
         $scope.currentMarca = null;
 
@@ -32,13 +32,13 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         $scope.txtDateOrder = '-fecha';
 
         //Inicializamos el reloj
-        setInterval(function () {
+        setInterval(function() {
             $scope.ReloadTime();
         }, 1000);
 
         //Inicializamos la función de parpadeo de chat
-        setInterval(function () {
-           // $('.parpadear').toggle('highlight');
+        setInterval(function() {
+            // $('.parpadear').toggle('highlight');
         }, 500);
 
         // setInterval(function () {
@@ -51,22 +51,20 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         // }
 
         //Obtengo el usuario logueado
-        if(!($('#lgnUser').val().indexOf('[') > -1)){
+        if (!($('#lgnUser').val().indexOf('[') > -1)) {
             localStorageService.set('lgnUser', $('#lgnUser').val());
-        }
-        else{
-            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
-                if(getParameterByName('employee') != ''){
+        } else {
+            if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
+                if (getParameterByName('employee') != '') {
                     $rootScope.currentEmployee = getParameterByName('employee');
+                } else {
+                    alert('Inicie sesión desde panel de aplicaciones.');
+                    window.close();
                 }
-                else{
-                   alert('Inicie sesión desde panel de aplicaciones.');
-                    window.close(); 
-                }
-                
+
             }
         }
-        if($rootScope.currentEmployee == null)
+        if ($rootScope.currentEmployee == null)
             $rootScope.currentEmployee = localStorageService.get('lgnUser');
 
         //Obtengo el nombre del empleado
@@ -80,7 +78,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         //Descargo el filtro padre
         GetMarca();
 
-        setInterval(function(){ 
+        setInterval(function() {
             if (!$scope.connected && $rootScope.currentEmployee != '') {
                 console.log('Intentando reconexión...');
                 SocketConnect();
@@ -97,34 +95,34 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     var SocketConnect = function() {
         //Inicio sesión en el socket para recibir actualizaciones
         $scope.socket = io.connect('http://192.168.20.9:3100/');
-        if($scope.socket != null){
-           SocketJoin(); 
-       }
-   };
+        if ($scope.socket != null) {
+            SocketJoin();
+        }
+    };
 
     //Declara los mensajes principales del socket
     var SocketJoin = function() {
         //Envío mis datos de usuario  
-        $scope.socket.emit('login', { user : $rootScope.empleado });
+        $scope.socket.emit('login', { user: $rootScope.empleado });
 
-        $scope.socket.on('hello', function(data){
+        $scope.socket.on('hello', function(data) {
             console.log(data.mensaje);
             $scope.connected = true;
         });
 
-        $scope.socket.on('pkgNotificacion', function(data){
+        $scope.socket.on('pkgNotificacion', function(data) {
             //Obtiene Notificaciones
             console.log(data.length + ' dato(s) recibido(s) at: ' + new Date().toString())
-            getNSuccessCallback(data,null,null,null);
+            getNSuccessCallback(data, null, null, null);
         });
 
-        $scope.socket.on('pkgAprobacion', function(data){
+        $scope.socket.on('pkgAprobacion', function(data) {
             //Obtiene Notificaciones
             console.log(data.length + ' Aprobacion(es) recibida(s) at: ' + new Date().toString())
-            getASuccessCallback(data,null,null,null);
+            getASuccessCallback(data, null, null, null);
         });
 
-        $scope.socket.on('disconnect', function (){
+        $scope.socket.on('disconnect', function() {
             console.log('Se ha desconectado.');
             $scope.connected = false;
         });
@@ -132,37 +130,36 @@ registrationModule.controller("notificacionController", function ($scope, $filte
 
 
     //Mensajes en caso de error
-    var errorCallBack = function (data, status, headers, config) {
+    var errorCallBack = function(data, status, headers, config) {
         alertFactory.error('Ocurrio un problema: ' + data);
         $('#btnReject').button('reset');
         $('#btnApprove').button('reset');
     };
 
     //Obtiene los datos del empleado
-    var getEmpleadoSuccessCallback = function (data, status, headers, config) {
+    var getEmpleadoSuccessCallback = function(data, status, headers, config) {
         $rootScope.empleado = data;
         SocketConnect();
     };
 
     //Success al obtener notificaciones
-    var getNSuccessCallback = function (data, status, headers, config) {
+    var getNSuccessCallback = function(data, status, headers, config) {
         //Obtiene Notificaciones
-        if ($scope.listaNotificacion_original != null){
+        if ($scope.listaNotificacion_original != null) {
             var inicial = $scope.listaNotificacion_original.length;
-            if($rootScope.actualizar){
+            if ($rootScope.actualizar) {
                 $scope.listaNotificacion_original = data;
-                AsignaListaNotificacion(); 
-                if($scope.currentOrder == 1)
-                    ApplyDateOrder(); 
+                AsignaListaNotificacion();
+                if ($scope.currentOrder == 1)
+                    ApplyDateOrder();
                 else
-                    if($scope.alphaOrder)
-                        ApplyAlphaOrder(); 
-                if (data.length > inicial){
+                if ($scope.alphaOrder)
+                    ApplyAlphaOrder();
+                if (data.length > inicial) {
                     alertFactory.info((data.length - inicial).toString() + ' nuevas notificaciones.');
                 }
             }
-        }
-        else{
+        } else {
             $scope.listaNotificacion_original = data;
             AsignaListaNotificacion();
         }
@@ -170,81 +167,89 @@ registrationModule.controller("notificacionController", function ($scope, $filte
 
     var AsignaListaNotificacion = function() {
 
-        if($scope.currentMarca != null && $scope.currentAgencia != null && $scope.currentDepartamento != null){
-            $scope.listaNotificacion = $filter('filter')($scope.listaNotificacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal, idDepartamento: $scope.currentDepartamento.dep_iddepartamento } , true);
-        }
-        else if($scope.currentMarca != null && $scope.currentAgencia != null){
-            $scope.listaNotificacion = $filter('filter')($scope.listaNotificacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal } , true);
-        }
-        else if($scope.currentMarca != null){
-            $scope.listaNotificacion = $filter('filter')($scope.listaNotificacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa } , true);
-        }
-        else{
+        if ($scope.currentMarca != null && $scope.currentAgencia != null && $scope.currentDepartamento != null) {
+            $scope.listaNotificacion = $filter('filter')($scope.listaNotificacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal, idDepartamento: $scope.currentDepartamento.dep_iddepartamento }, true);
+        } else if ($scope.currentMarca != null && $scope.currentAgencia != null) {
+            $scope.listaNotificacion = $filter('filter')($scope.listaNotificacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal }, true);
+        } else if ($scope.currentMarca != null) {
+            $scope.listaNotificacion = $filter('filter')($scope.listaNotificacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa }, true);
+        } else {
             $scope.listaNotificacion = $scope.listaNotificacion_original;
         }
-        
+
     };
 
     //Success al obtener aprobaciones
-    var getASuccessCallback = function (data, status, headers, config) {
+    var getASuccessCallback = function(data, status, headers, config) {
         //Obtiene Aprobaciones
-        if ($scope.listaAprobacion_original != null){
+        if ($scope.listaAprobacion_original != null) {
             var inicial = $scope.listaAprobacion_original.length;
-            if(data.length != inicial){
+            if (data.length != inicial) {
                 $scope.listaAprobacion_original = data;
-                AsignaListaAprobacion(); 
-                if($scope.currentOrder == 1)
-                    ApplyDateOrder(); 
+                AsignaListaAprobacion();
+                if ($scope.currentOrder == 1)
+                    ApplyDateOrder();
                 else
-                    ApplyAlphaOrder(); 
+                    ApplyAlphaOrder();
             }
-        }
-        else{
+        } else {
             $scope.listaAprobacion_original = data;
             AsignaListaAprobacion();
         }
     };
 
     var AsignaListaAprobacion = function() {
-        if($scope.currentMarca != null && $scope.currentAgencia != null && $scope.currentDepartamento != null){
-            $scope.listaAprobacion = $filter('filter')($scope.listaAprobacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal, idDepartamento: $scope.currentDepartamento.dep_iddepartamento } , true);
-        }
-        else if($scope.currentMarca != null && $scope.currentAgencia != null){
-            $scope.listaAprobacion = $filter('filter')($scope.listaAprobacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal } , true);
-        }
-        else if($scope.currentMarca != null){
-            $scope.listaAprobacion = $filter('filter')($scope.listaAprobacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa } , true);
-        }
-        else{
+        if ($scope.currentMarca != null && $scope.currentAgencia != null && $scope.currentDepartamento != null) {
+            $scope.listaAprobacion = $filter('filter')($scope.listaAprobacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal, idDepartamento: $scope.currentDepartamento.dep_iddepartamento }, true);
+        } else if ($scope.currentMarca != null && $scope.currentAgencia != null) {
+            $scope.listaAprobacion = $filter('filter')($scope.listaAprobacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa, idSucursal: $scope.currentAgencia.suc_idsucursal }, true);
+        } else if ($scope.currentMarca != null) {
+            $scope.listaAprobacion = $filter('filter')($scope.listaAprobacion_original, { idEmpresa: $scope.currentMarca.emp_idempresa }, true);
+        } else {
             $scope.listaAprobacion = $scope.listaAprobacion_original;
         }
-        
+
     };
 
     //Consulto el servidor para buscar nuevas notificaciones
-    $rootScope.Reload = function () {
+    $rootScope.Reload = function() {
         //Obtengo las notificaciones
         notificacionRepository.get($rootScope.currentEmployee)
-        .success(getNSuccessCallback)
-        .error(errorCallBack);
+            .success(getNSuccessCallback)
+            .error(errorCallBack);
 
-       // Obtengo las aprobaciones
-       aprobacionRepository.get($rootScope.currentEmployee)
-       .success(getASuccessCallback)
-       .error(errorCallBack);
-   }
+        // Obtengo las aprobaciones
+        aprobacionRepository.get($rootScope.currentEmployee)
+            .success(getASuccessCallback)
+            .error(errorCallBack);
+    }
 
     //////////////////////////////////////////////////////////////////
     // Implementación para ver documentos
     //////////////////////////////////////////////////////////////////
 
     $scope.VerDocumento = function(not) {
-        var cadena = not.adjunto;
-        var ar = cadena.split("|");
+        if (not.agrupacion == 7) {
+            var vin=not.identificador.split(": ")
+            console.log(vin[1])
+            notificacionRepository.getPdf('COT', vin[1], 0).then(function(d) {
+                if (d.data.length == 1) {
+                    var pdf = URL.createObjectURL(Utils.b64toBlob(d.data[0].arrayB, "application/pdf"))
+                    console.log(pdf)                   
+                        var myWindow = window.open(pdf, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");                   
+                } else {
+                    alertFactory.info('No se pudo cargar el pdf')
+                }
+                $scope.loadingOrder = false;
+            })
+        } else {
+            var cadena = not.adjunto;
+            var ar = cadena.split("|");
 
-        ar.forEach(function(entry){
-            var myWindow = window.open(not.ruta_archivos + entry, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
-        });   
+            ar.forEach(function(entry) {
+                var myWindow = window.open(not.ruta_archivos + entry, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
+            });
+        }
     };
 
     $scope.VerBusiness = function(not) {
@@ -252,7 +257,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     };
 
     //Rercargo el reloj
-    $scope.ReloadTime = function () {
+    $scope.ReloadTime = function() {
         $scope.hora = new Date();
         $scope.$apply();
     };
@@ -260,12 +265,12 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     //////////////////////////////////////////////////////////////////
     //Funcionalidad de visto
     /////////////////////////////////////////////////////////////////
-    $scope.Visto = function (not) {
+    $scope.Visto = function(not) {
         //Bloquea la actualización automática de notificaciones
         $rootScope.actualizar = !not.open;
-        if(not.estado == 0){
+        if (not.estado == 0) {
             aprobacionRepository.visto($rootScope.currentEmployee, not.idAprobacion)
-            .error(errorCallBack);
+                .error(errorCallBack);
             not.estado = 1;
         }
     };
@@ -279,7 +284,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         $("#slideIzq").animate({
             width: "toggle"
         });
-        if($scope.isSearching == false){
+        if ($scope.isSearching == false) {
             $('#slideIzq').blur();
             $('#slideIzq').val('');
             $scope.keySearch = '';
@@ -298,12 +303,11 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         $scope.currentOrder = 2;
         //Administra el estado del botón
         $scope.alphaOrder = !$scope.alphaOrder;
-        if($scope.alphaOrder == true){
+        if ($scope.alphaOrder == true) {
             $scope.tooltipAlphabeth = 'Ordenar Ascendente';
             $scope.txtAlphaOrder = '-identificador';
             ApplyAlphaOrder();
-        }
-        else{
+        } else {
 
             $scope.tooltipAlphabeth = 'Ordenar Descencente';
             $scope.txtAlphaOrder = '+identificador';
@@ -321,12 +325,11 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         $scope.currentOrder = 1;
         //Administra el estado del botón
         $scope.dateOrder = !$scope.dateOrder;
-        if($scope.dateOrder == true){
-            $scope.tooltipDate = 'Ordenar Ascendente';  
+        if ($scope.dateOrder == true) {
+            $scope.tooltipDate = 'Ordenar Ascendente';
             $scope.txtDateOrder = '-fecha';
             ApplyDateOrder();
-        }
-        else{
+        } else {
 
             $scope.tooltipDate = 'Ordenar Descencente';
             $scope.txtDateOrder = '+fecha';
@@ -345,7 +348,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
 
     $scope.ViewFiltro = function() {
         $('#modalFiltro').modal('show');
-        
+
     };
 
     $scope.AplicarFiltro = function() {
@@ -359,7 +362,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         $scope.filtrado = false;
         $scope.nivelCascada = 1;
         $scope.currentMarca = null;
-        $scope.currentAgencia  = null;
+        $scope.currentAgencia = null;
         $scope.currentDepartamento = null;
         AsignaListaNotificacion();
         AsignaListaAprobacion();
@@ -367,17 +370,17 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     };
 
     //Success de la lista de marcas
-    var getMarcaCallback = function (data, status, headers, config) {
+    var getMarcaCallback = function(data, status, headers, config) {
         $scope.listaMarca = data;
     }
 
     //Success de la lista de agencias
-    var getAgenciaCallback = function (data, status, headers, config) {
+    var getAgenciaCallback = function(data, status, headers, config) {
         $scope.listaAgencia = data;
     }
 
     //Success de la lista de departamentos
-    var getDepartamentoCallback = function (data, status, headers, config) {
+    var getDepartamentoCallback = function(data, status, headers, config) {
         $scope.listaDepartamento = data;
     }
 
@@ -385,23 +388,23 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     var GetMarca = function() {
         //Obtiene la lista de marcas
         filtroRepository.getMarca($rootScope.currentEmployee)
-        .success(getMarcaCallback)
-        .error(errorCallBack);
+            .success(getMarcaCallback)
+            .error(errorCallBack);
     };
 
     //Obtiene las listas para filtrar
     $scope.GetAgencia = function() {
         //Obtiene la lista de agencias
-        filtroRepository.getAgencia($rootScope.currentEmployee,$scope.currentMarca.emp_idempresa)
-        .success(getAgenciaCallback)
-        .error(errorCallBack);
+        filtroRepository.getAgencia($rootScope.currentEmployee, $scope.currentMarca.emp_idempresa)
+            .success(getAgenciaCallback)
+            .error(errorCallBack);
     };
 
     $scope.GetDepartamento = function() {
         //Obtiene la lista de departamentos
-        filtroRepository.getDepartamento($rootScope.currentEmployee,$scope.currentMarca.emp_idempresa,$scope.currentAgencia.suc_idsucursal)
-        .success(getDepartamentoCallback)
-        .error(errorCallBack);
+        filtroRepository.getDepartamento($rootScope.currentEmployee, $scope.currentMarca.emp_idempresa, $scope.currentAgencia.suc_idsucursal)
+            .success(getDepartamentoCallback)
+            .error(errorCallBack);
     };
 
     //Establece el valor de una Marca 
