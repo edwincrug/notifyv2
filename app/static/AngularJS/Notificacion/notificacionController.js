@@ -149,7 +149,10 @@ registrationModule.controller("notificacionController", function($scope, $filter
             var inicial = $scope.listaNotificacion_original.length;
             if ($rootScope.actualizar) {
                 $scope.listaNotificacion_original = data;
-                AsignaListaNotificacion();
+
+                setTimeout(function() {
+                    AsignaListaNotificacion();
+                }, 1000);
                 if ($scope.currentOrder == 1)
                     ApplyDateOrder();
                 else
@@ -161,7 +164,9 @@ registrationModule.controller("notificacionController", function($scope, $filter
             }
         } else {
             $scope.listaNotificacion_original = data;
-            AsignaListaNotificacion();
+            setTimeout(function() {
+                AsignaListaNotificacion();
+            }, 1000);
         }
     };
 
@@ -230,13 +235,13 @@ registrationModule.controller("notificacionController", function($scope, $filter
 
     $scope.VerDocumento = function(not) {
         if (not.agrupacion == 7) {
-            var vin=not.identificador.split(": ")
+            var vin = not.identificador.split(": ")
             console.log(vin[1])
             notificacionRepository.getPdf('COT', vin[1], 0).then(function(d) {
                 if (d.data.length == 1) {
                     var pdf = URL.createObjectURL(Utils.b64toBlob(d.data[0].arrayB, "application/pdf"))
-                    console.log(pdf)                   
-                        var myWindow = window.open(pdf, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");                   
+                    console.log(pdf)
+                    var myWindow = window.open(pdf, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
                 } else {
                     alertFactory.info('No se pudo cargar el pdf')
                 }
@@ -353,7 +358,9 @@ registrationModule.controller("notificacionController", function($scope, $filter
 
     $scope.AplicarFiltro = function() {
         $scope.filtrado = true;
+
         AsignaListaNotificacion();
+
         AsignaListaAprobacion();
         $('#modalFiltro').modal('hide');
     };
@@ -364,7 +371,9 @@ registrationModule.controller("notificacionController", function($scope, $filter
         $scope.currentMarca = null;
         $scope.currentAgencia = null;
         $scope.currentDepartamento = null;
+
         AsignaListaNotificacion();
+
         AsignaListaAprobacion();
         $('#modalFiltro').modal('hide');
     };
