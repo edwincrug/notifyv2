@@ -270,10 +270,12 @@ registrationModule.controller("notificacionController", function($scope, $filter
     //////////////////////////////////////////////////////////////////
     //Funcionalidad de visto
     /////////////////////////////////////////////////////////////////
-    $scope.Visto = function(not) {
+    $scope.Visto = function(not) {        
         //Bloquea la actualización automática de notificaciones
         $rootScope.actualizar = !not.open;
         if (not.estado == 0) {
+
+            console.log('estado: ' + not.estado);
             aprobacionRepository.visto($rootScope.currentEmployee, not.idAprobacion)
                 .error(errorCallBack);
             not.estado = 1;

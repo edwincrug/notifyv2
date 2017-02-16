@@ -58,7 +58,7 @@
                     </div>
                     <div class="row">
                         <div class="labelNotificacion col-xs-3">Descripción:</div>
-                        <div class=" col-xs-9"><pre>{{ notificacion.descripcionLarga  }}</pre></div>
+                        <div class=" col-xs-9"><p ng-bind-html="notificacion.descripcionLarga"></p></div>
                     </div>                    
                     <div class="row" ng-show="notificacion.tipoNotificacion == 3 || notificacion.estatus == 6 || notificacion.agrupacion == 3">
                         <div class="labelNotificacion col-xs-3">Estatus: </div>
@@ -80,7 +80,7 @@
                             <button type="button" class="btn btn-default btn-sm btnAprove" data-loading-text="Revisando..." id="btnCheck" ng-click="Revisar(notificacion)" ng-class="{'disabled' : notificacion.estatus == 6}" ng-show="notificacion.Depto == 'OT' || (notificacion.Depto == 'RE' && notificacion.esPlanta == 0)" tooltip="Revisar"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>Revisión</button>
                         </div>
                     </div>
-                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 }" ng-controller="aprobacionController">
+                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 && notificacion.tipoNotificacion != 3 }" ng-controller="aprobacionController">
                         <div class="col-xs-10"></div>
                         <div class="col-xs-2">
                             <button type="button" class="btn btn-warning btn-sm btnAprove" data-loading-text="Procesando..." id="btnAceptar" ng-click="Aceptar(notificacion)" tooltip="Aceptar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar</button>
