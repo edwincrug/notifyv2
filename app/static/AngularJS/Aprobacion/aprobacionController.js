@@ -87,7 +87,13 @@
 
     //Success de rechazo
     var putRSuccessCallback = function (data, status, headers, config) {
-        alertFactory.warning('Rechazada Correctamente.')
+
+
+        if(data == 0)
+            alertFactory.warning('Rechazada Correctamente.')
+        else
+            alertFactory.error('La solicitud ha sido aprobada o rechazada previamente por otro autorizador.');
+                
         $('#btnReject').button('reset');
         $rootScope.actualizar = true;
         $rootScope.Reload();
